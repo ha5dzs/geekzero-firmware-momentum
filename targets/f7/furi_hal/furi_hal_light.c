@@ -6,10 +6,12 @@
 #include <momentum/momentum.h>
 #include <rgb_backlight.h>
 
-#define LED_CURRENT_RED   (50u)
-#define LED_CURRENT_GREEN (50u)
-#define LED_CURRENT_BLUE  (50u)
-#define LED_CURRENT_WHITE (150u)
+// The geek zero has a GaAsP green backlight LED. It really doesn't like being overdriven. So reduced the current to 20 mA.
+
+#define LED_CURRENT_RED   (20u)
+#define LED_CURRENT_GREEN (20u)
+#define LED_CURRENT_BLUE  (20u)
+#define LED_CURRENT_WHITE (20u)
 
 void furi_hal_light_init(void) {
     furi_hal_i2c_acquire(&furi_hal_i2c_handle_power);

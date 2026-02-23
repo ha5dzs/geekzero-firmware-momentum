@@ -1,3 +1,76 @@
+## Geek Zero
+
+~ is a clone of the Flipper, probably developed somewhere around the Shenzhen area, and the PCB is built from scratch based on the open-sourced schematics available. Usually these devices manifest on AliExpress on seemingly non-salient storefronts. Search for 'Upgraded Clipper', 'Upgraded Clipper with Momentum System', 'Electronic Pet Toy', 'Electronic Dolphin', 'Clipper', 'Geek Zero Dolphin 2' and so on.
+
+ Most of the Geek Zero is electronically identical to the original Flipper Zero, but there are a few differences though.
+
+ So far, the identified ones are:
+
+* The One-Time Programmable memory area (OTP) is NOT programmed, and the 'Security Enclave' along with the 'Factory Keys' are missing.
+  * These are NOT open-sourced, so DIY-ers will not be able to use some applications and the universal two-factor (U2F) feature. On the plus side, if the main MCU needs to be replaced, it could be sourced from anywhere.
+* The NFC/RFID antenna is smaller, and the 125 kHz part seems not to be tuned as well: it has reduced reading range and it is unable to read FDX-B (animal) tags that are operating at 134 kHz.
+* The display is different: not only the pixel aspect ratio is off, but the display controller's preferred contrast value is different too.
+* My unit's display backlight is not white: it's green below 25% and very distinctly saffron-esque above 50%, presumably because the poor LEDs are being over-biased.
+  * This is fixed now. Poor LEDs had 150 mA blasted at them. Ouch.
+* The '5V' pin is labelled as 'VSYS', and is only 5V when the USB is plugged in. Otherwise, it's the lithium battery's voltage. So probably there is no boost converter in it.
+* Speaking of the built-in battery, it is very tiny (and optimistically labelled: 760 mAh) and its thermistor wire is not connected at all.
+* It has some additional hardware too, allegedly. These are:
+  * CC1101 antenna is not only on the PCB with traces, but is also routed out via an MCX connector in the back.
+  * [Bosch BMI160](https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bmi160-ds000.pdf) (the listing calls it 'BM160') inertial sensor.
+    * I think it's safe to say that it's missing from mine. The 'BMI Air Mouse' app doesn't work, and there is no Bosch IC on any of the PCBs :)
+  * There supposed to be a Hall-sensor on top of the display, but no information about what it is or how it is connected.
+    * The white version's backplate shows that it may be read via `PB2` but my black one doesn't say it.
+    * I believe it is the missing U23 component. The pinout would match with an [AH1806](https://www.diodes.com/assets/Datasheets/AH1806.pdf), and a small decoupling capacitor is missing too.
+    * There is a thin trace that does seem to go to PB2 from the hall sensor's output through a resistor.
+  * There is a magnet built in at the back, so you can play with various sensors and switches.
+
+## [Photos](/documentation/geekzero_photos)
+
+There is a scan of the PCBs in the link above.
+
+![](/documentation/geekzero_photos/firmware_reflashed_too_much_contrast_2.jpg)
+![](/documentation/geekzero_photos/firmware_reflashed_too_much_contrast_1.jpg)
+![](/documentation/geekzero_photos/split_open_2.jpg)
+![](/documentation/geekzero_photos/split_open_3.jpg)
+
+
+## Modified Momentum firmware for the Geek Zero flipper clone
+
+Not much of a modification really. The display is different, and it needed the default contrast value changed.
+
+For the lazy ones, all I did was to change `CONTRAST_ERC` to 10 in `lib/u8g2/u8g2_glue.c`
+
+I also reduced the backlight current. 150 mA for AlGaInP green LEDs were a tad too much. It feels much happier at 20 mA.
+
+`LED_CURRENT_WHITE` was set to  `(20u)` in `targets/f7/furi_hal/furi_hal_light.c`
+
+I tried the qflipper app, and it seems that it needs a valid device name.
+
+`return *furi_hal_version.name == 0x00 ? "geekzero" : furi_hal_version.name;` was added to `targets/f7/furi_hal/furi_hal_version.c` to function `furi_hal_version_get_name_ptr()` around line 269-271, instead of returning `NULL` because the OTP was not set. The name can be changed programmatically too, but it is not implemented in the stock firmware.
+
+
+## Why
+
+I needed some extra features that were not in the original firmware. Besides, it's an open-source project, and someone went through the trouble of building the device from scratch. Wagner had to exist first, in order to get all the other composers responding to Wagner's work. This is just yet another example of this and [is not the only one](https://www.hackster.io/zst123/fcfz-fully-compatible-flipper-zero-e686ba).
+
+This whole thing started when I re-flashed the Momentum firmware and got a completely black screen. The seller was of course not responsive, so I was on my own. Luckily, the code was relatively easy to navigate and is well-documented.
+
+Sadly, these devices have a certain (bad) reputation because some idiots on social media are (mostly pretending) misusing them; in reality, these devices are in fact nothing but an implementation of a microcontroller ecosystem, just like an Arduino. It just happened to be STM32-based and runs a modified version of RTOS, with some quasi-standardised hardware, and has enough developer community around it so it's above critical mass. As a plus, after the first few years of teething problems, the core developers seemingly stopped randomly introducing breaking changes, so I can actually work with it. Collingridge dilemma and the likes.
+
+For scientific research, I am using my own custom hardware for it that I developed on my own, and for this purpose, I am more than happy to use the stock firmware. Until I hit a snag, that is. Theoretically all other firmware versions may be customised, so far the differences are very little.
+
+## Installing
+
+Clone this repo to your favourite happy place on your computer, format the micro SD card inside the Geek Zero, and then execute:
+```
+./fbt flash_usb_full
+```
+
+The OTP is not programmed. The name of the device is set within the firmware.. U2F will throw a 'Certificate error', but otherwise the device is usable.
+
+
+
+
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset=".github/assets/logo_dark.png">

@@ -286,7 +286,9 @@ uint32_t furi_hal_version_get_hw_timestamp(void) {
 }
 
 const char* furi_hal_version_get_name_ptr(void) {
-    return *furi_hal_version.name == 0x00 ? NULL : furi_hal_version.name;
+    //return *furi_hal_version.name == 0x00 ? NULL : furi_hal_version.name;
+    // The OTP of the geek zero is not set, so let's use a fallback name.
+    return *furi_hal_version.name == 0x00 ? "geekzero" : furi_hal_version.name;
 }
 
 const char* furi_hal_version_get_device_name_ptr(void) {

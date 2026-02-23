@@ -2,7 +2,8 @@
 
 #include <furi_hal.h>
 
-#define CONTRAST_ERC 32
+// The Geek Zero defaults to the ERC screen and needs a lower 'Electronic Volume' (contrast) setting.
+#define CONTRAST_ERC 10
 #define CONTRAST_MGG 28
 
 uint8_t u8g2_gpio_and_delay_stm32(u8x8_t* u8x8, uint8_t msg, uint8_t arg_int, void* arg_ptr) {
@@ -148,8 +149,8 @@ uint8_t u8x8_d_st756x_common(u8x8_t* u8x8, uint8_t msg, uint8_t arg_int, void* a
         c = ((u8x8_tile_t*)arg_ptr)->cnt;
         c *= 8;
         ptr = ((u8x8_tile_t*)arg_ptr)->tile_ptr;
-        /* 
-                The following if condition checks the hardware limits of the st7565 
+        /*
+                The following if condition checks the hardware limits of the st7565
                 controller: It is not allowed to write beyond the display limits.
                 This is in fact an issue within flip mode.
             */
