@@ -1,7 +1,13 @@
 ### Added:
 - Apps:
-  - NFC: ISO 15693-3 NFC Writer (by @ch4istO)
+  - Games: Checkers (by @H4W9)
+  - NFC:
+    - ISO 15693-3 NFC Writer (by @ch4istO)
+    - UL-C Bruteforce (by @noproto)
+    - UL-C Relay (by @noproto)
+    - ULCFkey (by @noproto)
   - Sub-GHz: ProtoPirate (by @RocketGod-git & @xMasterX & @zero-mega et al.)
+  - Tools: Flipper Wedge (by @dangerous-tac0s)
 - Sub-GHz:
   - UL: Cardin S449 protocol full support (64bit keeloq) (with Add manually, and all button codes) (use FSK12K modulation to read the remote) (by @xMasterX & @zero-mega)
   - UL: Beninca ARC AES128 protocol full support (128bit dynamic) (with Add manually, and 2 button codes) (by @xMasterX & @zero-mega)
@@ -25,18 +31,27 @@
 
 ### Updated:
 - Apps:
+  - XERO: MFKey: 4.1 with 40% faster key recovery, improved memory efficiency (by @dchristle), new SEN dictionary for 10x faster recovery (by @noproto)
+  - UL: Update Sub-GHz apps for FM12K modulation (by @xMasterX)
   - CAN Tools: Parity with DBC format, support importing DBC files (by @MatthewKuKanich)
-  - ESP Flasher: Bump Marauder 1.9.1 (by @justcallmekoko), Marauder 1.9.0 support (by @H4W9)
-  - FlipSocial: Autocomplete, keyboard improvements, bugfixes (by @jblanked)
+  - ESP Flasher: Bump Marauder 1.10.2 (by @justcallmekoko)
+  - ESP32 WiFi Marauder: Marauder 1.10.0 support (by @justcallmekoko), Marauder 1.9.0 support (by @H4W9)
+  - FlipLibrary: Added Fahrenheit, current weather, and wind speed/direction (by @H4W9)
+  - FlipSocial: Autocomplete, keyboard improvements, explore and profile view enhancements, bugfixes (by @jblanked)
+  - FlipWeather: Added Fahrenheit, current weather, and wind speed/direction (by @H4W9)
+  - Flipper Blackhat: TUI command (by @o7-machinehum)
   - Geometry Dash: Major refactor, bugfixes and performance improvements, rename from Geometry Flip (by @gooseprjkt)
   - HC-SR04 Distance Sensor: Option to change measure units (by @Tyl3rA)
   - IconEdit: Save/Send animations, settings tab with canvas scale and cursor guides, bugfixes (by @rdefeo)
-  - NFC Login: Code refactor, bugfixes, renamed from NFC PC Login (by @Play2BReal)
+  - INA2xx INA Meter: Fixed application freezing when the sensor is not connected (by @cepetr)
+  - NFC Login: Code refactor, bugfixes, renamed from NFC PC Login, restore BLE profile on app exit (by @Play2BReal)
+  - Picopass: Option to Create credential without a card (by @redteamlife)
   - Seader: SAM ATR3 support, better IFSC/IFSD handling, various improvements (by @bettse)
-  - Seos Compatible: Seos write support, various improvements (by @aaronjamt)
+  - Seos Compatible: Seos write support, various improvements (by @aaronjamt), support switching key sets (by @pcunning), code refactoring, various bugfixes (by @bettse)
   - Sub-GHz Scheduler: Added new interval times, bugfixes and improvements (by @shalebridge)
+  - Tetris: Various bugfixes (by @Bricktech2000)
   - Unitemp: Numerous improvements from @MLAB-project fork (by @MLAB-project)
-  - UL: Update Sub-GHz apps for FM12K modulation (by @xMasterX)
+  - XRemote: Add dolphin xp and crash bugfix (by @teohumeau)
 - Sub-GHz:
   - UL: Counter editor refactoring (by @Dmitry422)
   - UL: Alutech AT-4N & Nice Flor S turbo speedup (by @Dmitry422)
@@ -60,6 +75,7 @@
   - UL: Fix Alutech AT4N false positives (by @xMasterX)
   - UL: Fix documentation link for HT12A protocol (by @carlogrisetti)
   - UL: BFT Mitto fix decode bug (seed was not resetting after one successful decode) (by @xMasterX)
+  - UL: KeeLoq fix display of AN-Motors and HCS101 keys (by @xMasterX)
 - NFC:
   - Fix sending 32+ byte ISO 15693-3 commands (by @WillyJL)
   - Fixes to `READ_MULTI` and `GET_BLOCK_SECURITY` commands in ISO 15693-3 emulation (#501 by @WillyJL & aaronjamt)
